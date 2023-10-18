@@ -1,0 +1,34 @@
+version: '3.7'
+
+services:
+  api:
+    build: .
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    volumes:
+      - ./src:/node-app/src
+
+  db:
+    restart: always
+    image: mongo:6.0.3
+    ports:
+      - 27017:27017
+    volumes:
+      - blog-volume:/data/db
+      - blog-volume:/var/log/mongodb
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    environment:
+      MONGO_DB_NAME: $MONGO_DB_NAME
+      MONGO_INITDB_ROOT_USERNAME: $MONGO_DB_USERNAME
+      MONGO_INITDB_ROOT_PASSWORD: $MONGO_DB_PASSWORD
+
+volumes:
+  blog-volume:
+
+networks:
+  blog-network:
+    driver: bridge
+    name: blog-network

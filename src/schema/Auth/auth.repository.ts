@@ -12,10 +12,10 @@ export const AuthRepository = {
   login: async (input: t.LoginInput): Promise<t.LoginResponse> => {
     try {
       const user = await UserModel.findOne({ email: input.email })
-      if (user === null) return setError('credentials', 'Correo o contraseña incorrecta')
+      if (user === null) return setError('credentials', 'Invalid credentials')
 
       const isValidPassword = await argon2.verify(user.password, input.password)
-      if (!isValidPassword) return setError('credentials', 'Correo o contraseña incorrecta')
+      if (!isValidPassword) return setError('credentials', 'Invalid credentials')
 
       const token = jwt.sign({ id: user._id }, { expiresIn: '1d' })
 
@@ -28,7 +28,7 @@ export const AuthRepository = {
   register: async (input: t.RegisterUserInput): Promise<t.RegisterUserResponse> => {
     try {
       const hasUser = await UserModel.findOne({ email: input.email })
-      if (hasUser !== null) return setError('email', 'Correo ya ha sido registrado')
+      if (hasUser !== null) return setError('email', 'Email is already taken')
 
       const hashPassword = await argon2.hash(input.password)
       const user = new UserModel({ ...input, password: hashPassword })

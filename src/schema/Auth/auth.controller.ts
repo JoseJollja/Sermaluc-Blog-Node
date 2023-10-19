@@ -7,7 +7,8 @@ import type { Request, Response } from 'express'
 import type { CustomRequest } from '@src/interface'
 
 export const authMeController = async (req: CustomRequest, res: Response) => {
-  res.json({ ok: req.user !== undefined, data: req.user ?? null })
+  const hasUser = req.user !== undefined
+  res.status(hasUser ? 200 : 401).json({ ok: hasUser, data: req.user ?? null })
 }
 
 export const authLoginController = async (req: Request, res: Response) => {
@@ -27,6 +28,11 @@ export const authLoginController = async (req: Request, res: Response) => {
   }
 
   const response = await AuthRepository.login(req.body)
+  if (!response.ok) {
+    res.status(400).json(response)
+    return
+  }
+
   res.json(response)
 }
 
@@ -51,5 +57,10 @@ export const authRegisterController = async (req: Request, res: Response) => {
   }
 
   const response = await AuthRepository.register(req.body)
+  if (!response.ok) {
+    res.status(400).json(response)
+    return
+  }
+
   res.json(response)
 }

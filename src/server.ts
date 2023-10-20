@@ -1,3 +1,4 @@
+import cors from 'cors'
 import express, { type Express } from 'express'
 
 import Database from './db'
@@ -17,6 +18,7 @@ class Server {
   }
 
   middlewares() {
+    this.app.use(cors({ credentials: true, origin: ['http://localhost:3000'] }))
     this.app.use(express.json())
   }
 
@@ -29,7 +31,7 @@ class Server {
       this.middlewares()
 
       // Root router
-      this.app.use('/api/v1', rootRouter)
+      this.app.use('/api', rootRouter)
 
       // Start Server
       await new Promise((resolve) => {

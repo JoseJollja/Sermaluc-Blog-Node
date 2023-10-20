@@ -13,7 +13,7 @@ export const getAllCommentsController = async (req: CustomRequest, res: Response
     filters: z.object({ articleId: z.string().optional() }).optional()
   })
 
-  const parse = schema.safeParse(req.body)
+  const parse = schema.safeParse(req.query)
   if (!parse.success) {
     res.status(400).json({
       ok: parse.success,
@@ -23,7 +23,7 @@ export const getAllCommentsController = async (req: CustomRequest, res: Response
     return
   }
 
-  const response = await CommentRepository.getAll(req.body)
+  const response = await CommentRepository.getAll(req.query)
   if (!response.ok) return res.status(400).json(response)
 
   return res.json(response)

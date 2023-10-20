@@ -7,7 +7,7 @@ import { getPagination } from '@src/utils/get-pagination'
 
 export const CommentRepository = {
   async getAll(args: t.GetAllCommentsArgs): Promise<t.GetAllCommentsResponse> {
-    const sort = args.sort ?? 'asc'
+    const sort = args.sort ?? { createdAt: 'asc' }
     const pagination = args.pagination ?? { page: 1, pageSize: 10 }
     const { skip, take } = getPagination(pagination.page, pagination.pageSize)
 
@@ -18,7 +18,7 @@ export const CommentRepository = {
           .populate('user')
           .skip(skip)
           .limit(take)
-          .sort({ createdAt: sort })
+          .sort(sort)
           .exec()
       ])
 

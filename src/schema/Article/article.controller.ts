@@ -7,22 +7,12 @@ import type { CustomRequest } from '@src/interface'
 
 export const getAllArticlesController = async (req: CustomRequest, res: Response) => {
   const schema = z.object({
-    sort: z.enum(['asc', 'desc']).optional(),
-    pagination: z
-      .object({
-        page: z.number().min(1).optional(),
-        pageSize: z.number().min(1).optional()
-      })
-      .optional(),
-    filters: z
-      .object({
-        title: z.string().optional(),
-        content: z.string().optional()
-      })
-      .optional()
+    sort: z.object({ createdAt: z.enum(['asc', 'desc']).optional() }).optional(),
+    pagination: z.object({ page: z.number().min(1), pageSize: z.number().min(1) }).optional(),
+    filters: z.object({ userId: z.string().optional() }).optional()
   })
 
-  const parse = schema.safeParse(req.body)
+  const parse = schema.safeParse(req.query)
   if (!parse.success) {
     res.status(400).json({
       ok: parse.success,
@@ -32,7 +22,7 @@ export const getAllArticlesController = async (req: CustomRequest, res: Response
     return
   }
 
-  const response = await ArticleRepository.getAll(req.body)
+  const response = await ArticleRepository.getAll(req.query)
   if (!response.ok) return res.status(400).json(response)
 
   return res.json(response)
@@ -91,7 +81,7 @@ export const updateArticleController = async (req: CustomRequest, res: Response)
 
 export const deleteArticleController = async (req: CustomRequest, res: Response) => {
   const ok = await ArticleRepository.delete(req.params.id)
-  if (ok) return res.status(400).json({ ok })
+  if (!ok) return res.status(400).json({ ok })
 
   return res.json({ ok })
 }

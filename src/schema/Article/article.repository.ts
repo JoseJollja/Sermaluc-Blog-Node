@@ -41,7 +41,7 @@ export const ArticleRepository = {
   },
   async getById(id: string): Promise<t.GetArticleByIdResponse> {
     try {
-      const article = await ArticleModel.findById(id).exec()
+      const article = await ArticleModel.findById(id).populate('user').exec()
       if (article === null) return setError('id', 'Article not found')
 
       return { ok: true, data: article }

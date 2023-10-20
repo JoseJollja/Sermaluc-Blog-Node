@@ -4,12 +4,10 @@ import authRouter from '@src/schema/Auth/auth.router'
 import commentRouter from '@src/schema/Comment/comment.router'
 import articleRouter from '@src/schema/Article/article.router'
 
-import authChecker from '@src/middlewares/auth-checker.middleware'
-
 const rootRouter = Router()
 
 rootRouter.use('/auth', authRouter)
-rootRouter.use('/articles', authChecker, articleRouter)
-rootRouter.use('/comments', authChecker, commentRouter)
+rootRouter.use('/articles', articleRouter)
+rootRouter.use('/comments', commentRouter)
 
 export default rootRouter

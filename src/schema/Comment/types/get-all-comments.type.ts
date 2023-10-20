@@ -2,9 +2,9 @@ import { type PaginatedArgs, PaginatedResponse, type SortArg } from '@src/generi
 import type IComment from '../comment.interface'
 
 export class GetAllCommentsArgs {
-  sort?: SortArg
-  pagination?: PaginatedArgs
   filters?: IComment
+  pagination?: PaginatedArgs
+  sort?: Record<keyof IComment, SortArg>
 }
 
 export class GetAllCommentsResponse extends PaginatedResponse<IComment> {}

@@ -11,6 +11,9 @@ services:
     volumes:
       - ./src:/node-app/src
       - ./public:/node-app/public
+    environment:
+      MONGO_DB_HOST: db
+      MONGO_DB_PORT: 27017
 
   db:
     restart: always

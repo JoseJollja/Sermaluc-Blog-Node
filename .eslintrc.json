@@ -10,6 +10,7 @@
     "ecmaVersion": "latest",
     "project": ["./tsconfig.json"]
   },
+  "ignorePatterns": ["mongo-init.js"],
   "rules": {
     "@typescript-eslint/indent": "off",
     "@typescript-eslint/space-before-function-paren": "off",

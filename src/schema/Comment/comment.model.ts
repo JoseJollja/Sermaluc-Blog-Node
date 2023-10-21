@@ -19,7 +19,8 @@ CommentSchema.virtual('user', {
   ref: 'User',
   localField: 'userId',
   foreignField: '_id',
-  justOne: true
+  justOne: true,
+  options: { select: '-password' }
 })
 
 CommentSchema.virtual('article', {

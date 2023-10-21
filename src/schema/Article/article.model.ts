@@ -16,7 +16,8 @@ ArticleSchema.virtual('user', {
   ref: 'User',
   localField: 'userId',
   foreignField: '_id',
-  justOne: true
+  justOne: true,
+  options: { select: '-password' }
 })
 
 ArticleSchema.virtual('photo', {

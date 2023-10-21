@@ -49,7 +49,7 @@ export const AuthRepository = {
   me: async (id: string): Promise<t.MeResponse> => {
     try {
       const user = await UserModel.findById(id)
-      if (user === null) return setError('user', 'Usuario no encontrado')
+      if (user === null) return setError('user', 'User not found')
 
       return { ok: true, data: user }
     } catch (error) {

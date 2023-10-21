@@ -7,4 +7,5 @@ export class CreateArticleArgs {
   title: string
   content: string
   userId: string
+  photoId: string
 }

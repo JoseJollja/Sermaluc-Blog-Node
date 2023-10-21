@@ -16,6 +16,7 @@ export const ArticleRepository = {
         ArticleModel.find(args.filters ?? {}).count(),
         ArticleModel.find(args.filters ?? {})
           .populate('user')
+          .populate('photo')
           .skip(skip)
           .limit(take)
           .sort(sort)
@@ -41,7 +42,7 @@ export const ArticleRepository = {
   },
   async getById(id: string): Promise<t.GetArticleByIdResponse> {
     try {
-      const article = await ArticleModel.findById(id).populate('user').exec()
+      const article = await ArticleModel.findById(id).populate('user').populate('photo').exec()
       if (article === null) return setError('id', 'Article not found')
 
       return { ok: true, data: article }

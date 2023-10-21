@@ -10,6 +10,7 @@ services:
       - db
     volumes:
       - ./src:/node-app/src
+      - ./public:/node-app/public
 
   db:
     restart: always

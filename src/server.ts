@@ -6,6 +6,7 @@ import config from './config'
 import logger from './utils/logger'
 import AppError from './utils/app-error'
 import rootRouter from './router/root-router'
+import path from 'path'
 
 class Server {
   app: Express
@@ -20,6 +21,7 @@ class Server {
   middlewares() {
     this.app.use(cors({ credentials: true, origin: ['http://localhost:3000'] }))
     this.app.use(express.json())
+    this.app.use('/uploads', express.static(path.join(__dirname, '../public/uploads')))
   }
 
   async start() {

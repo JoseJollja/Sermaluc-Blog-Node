@@ -5,6 +5,7 @@ export default interface IArticle {
   title: string
   content: string
   userId: Types.ObjectId
+  photoId: Types.ObjectId
   createdAt: Date
   updatedAt: Date
 }

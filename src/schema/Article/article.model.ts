@@ -6,7 +6,8 @@ const ArticleSchema = new Schema<IArticle>(
   {
     title: { type: String, required: true, unique: true },
     content: { type: String, required: true },
-    userId: { type: Schema.Types.ObjectId, required: true }
+    userId: { type: Schema.Types.ObjectId, required: true },
+    photoId: { type: Schema.Types.ObjectId, required: true }
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 )
@@ -14,6 +15,13 @@ const ArticleSchema = new Schema<IArticle>(
 ArticleSchema.virtual('user', {
   ref: 'User',
   localField: 'userId',
+  foreignField: '_id',
+  justOne: true
+})
+
+ArticleSchema.virtual('photo', {
+  ref: 'Upload',
+  localField: 'photoId',
   foreignField: '_id',
   justOne: true
 })

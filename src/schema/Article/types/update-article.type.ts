@@ -6,4 +6,5 @@ export class UpdateArticleResponse extends withErrorsResponse<IArticle> {}
 export class UpdateArticleArgs {
   title: string
   content: string
+  photoId: string
 }
